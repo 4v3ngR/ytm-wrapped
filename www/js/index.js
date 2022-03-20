@@ -26,7 +26,8 @@ var plugins = {
     "xmlhttprequest.js": null,
     "background.js": null,
     "adblock.js": null,
-    "audioonly.js": null
+    "audioonly.js": null,
+    "ui.js": null
 };
 
 var inAppBrowserRef;
