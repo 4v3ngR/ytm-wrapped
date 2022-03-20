@@ -1,0 +1,35 @@
+{
+  "name": "com.wrapped.ytmusic",
+  "displayName": "TYMwrapped",
+  "version": "1.0.0",
+  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "main": "index.js",
+  "scripts": {
+    "build:debug": "cordova build android",
+    "build:release": "cordova build android --release",
+    "package:release": "rm -f release.apks && npm run build:release && bundletool build-apks --bundle platforms/android/app/build/outputs/bundle/release/app-release.aab --output release.apks --mode=universal && mv release.apks releases.zip"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "Apache Cordova Team",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "cordova-android": "^10.1.1",
+    "cordova-electron": "^3.0.0",
+    "cordova-plugin-file": "^6.0.2"
+  },
+  "cordova": {
+    "platforms": [
+      "electron",
+      "android"
+    ],
+    "plugins": {
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-file": {}
+    }
+  },
+  "dependencies": {
+    "cordova-plugin-inappbrowser": "^5.0.0"
+  }
+}

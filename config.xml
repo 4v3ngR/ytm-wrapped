@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.wrapped.ytmusic" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>YTM wrapped</name>
+    <description>youtube music as you want it</description>
+    <author email="root@localhost" href="https://localhost">
+        root
+    </author>
+    <content src="index.html" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+    <preference name="Fullscreen" value="true" />
+    <preference name="OverrideUserAgent" value="Mozilla/5.0 (Android 12; Mobile; rv:68.0) Gecko/68.0 Firefox/98.0" />
+</widget>
