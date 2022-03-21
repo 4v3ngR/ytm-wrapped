@@ -10,5 +10,5 @@
     <allow-intent href="https://*/*" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <preference name="Fullscreen" value="true" />
-    <preference name="OverrideUserAgent" value="Mozilla/5.0 (Android 12; Mobile; rv:68.0) Gecko/68.0 Firefox/98.0" />
+    <preference name="OverrideUserAgent" value="Mozilla/5.0 (Macintosh; Intel Mac OS X 12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.82 Safari/537.36" />
 </widget>
