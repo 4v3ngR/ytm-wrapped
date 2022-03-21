@@ -3,11 +3,6 @@
 // Thanks for releasing it MIT
 
 (function() {
-  if (window.noblur === "loaded") return;
-
-  window.noblur = "loaded";
-  console.log("loadding noblur");
-
   Object.defineProperties(document,
     {
       'hidden': {value: false},
