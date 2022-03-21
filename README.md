@@ -35,6 +35,9 @@ npm run package:release
 ## XHR/Fetch intercepting
 I've added some code that will allow plugins to receive the responses to XMLHttpRequests and Fetch requests. This has allowed a new adblock plugin to be created (it filters out the ad details from the player response). The functionality to intercept the responses, and make changes, should allow for some good plugins.
 
+## Releases
+Here's the link to the releases page https://github.com/4v3ngR/ytm-wrapped/releases
+
 ## Notes
 * Adblocking now works with XHR interception
 * Background works when playing audio. If playing a video, the video will pause. Noting that videos can actually start while the app is in the background
