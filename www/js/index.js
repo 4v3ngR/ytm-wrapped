@@ -41,13 +41,13 @@
     );
     window.inAppBrowserRef.addEventListener('loadstop', function() {
       window.inAppBrowserRef.insertCSS({code:"body{background-color:black;}"});
-      window.inAppBrowserRef.show();
       try {
         console.log("going to inject plugins");
         Object.keys(plugins).forEach((plugin) => injectPlugin(plugin));
       } catch (ex) {
         console.error("got ex", ex.message);
       }
+      window.inAppBrowserRef.show();
     });
     window.inAppBrowserRef.addEventListener('exit', function() {
       if (navigator.app) {
