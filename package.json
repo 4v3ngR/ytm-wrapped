@@ -17,7 +17,8 @@
   "devDependencies": {
     "cordova-android": "^10.1.1",
     "cordova-electron": "^3.0.0",
-    "cordova-plugin-file": "^6.0.2"
+    "cordova-plugin-file": "^6.0.2",
+    "cordova-plugin-music-controls2": "^3.0.6"
   },
   "cordova": {
     "platforms": [
@@ -26,7 +27,8 @@
     ],
     "plugins": {
       "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-file": {}
+      "cordova-plugin-file": {},
+      "cordova-plugin-music-controls2": {}
     }
   },
   "dependencies": {
