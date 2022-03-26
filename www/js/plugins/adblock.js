@@ -16,9 +16,15 @@
     }
 
     if (state === 'open' && data) {
-      if (url.includes('youtubei/v1/log_event')) {
+      if (
+        url.includes('youtubei/v1/log_event') ||
+        url.includes('play.google.com') ||
+        url.includes('api/stats/atr') ||
+        url.includes('doubleclick.net')
+      ) {
         return false;
       }
+      console.log("allowing", url);
     }
 
     return data;

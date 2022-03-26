@@ -24,6 +24,7 @@
 
   // based off https://stackoverflow.com/questions/16959359/intercept-xmlhttprequest-and-modify-responsetext
   var rawOpen = XMLHttpRequest.prototype.open;
+  var rawSetRequestHeader = XMLHttpRequest.prototype.setRequestHeader;
 
   XMLHttpRequest.prototype.open = function(method, url, _async, username, password) {
     if (!this._hooked) {
@@ -33,6 +34,12 @@
     if (intercept('open', url, true)) {
       rawOpen.apply(this, arguments);
     }
+  }
+
+  XMLHttpRequest.prototype.setRequestHeader = function(header, value) {
+    try {
+      rawSetRequestHeader.apply(this, arguments);
+    } catch (ex) {}
   }
 
   function setupHook(xhr) {

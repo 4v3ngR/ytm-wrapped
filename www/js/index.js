@@ -6,6 +6,7 @@
   var plugins = {
     "fetch.js": null,
     "xmlhttprequest.js": null,
+    "tracking.js": null,
     "background.js": null,
     "adblock.js": null,
     "audioonly.js": null,
