@@ -39,6 +39,7 @@
       '_blank',
       'location=no,hidden=true,hardwareback=yes'
     );
+
     window.inAppBrowserRef.addEventListener('loadstop', function() {
       window.inAppBrowserRef.insertCSS({code:"body{background-color:black;}"});
       try {
@@ -49,6 +50,7 @@
       }
       window.inAppBrowserRef.show();
     });
+
     window.inAppBrowserRef.addEventListener('exit', function() {
       if (navigator.app) {
         navigator.app.exitApp();

@@ -13,18 +13,6 @@
     searchParams: 'URLSearchParams' in window,
     iterable: 'Symbol' in window && 'iterator' in Symbol,
     blob: false,
-    /* for simplicity of the interceptors, let's not deal with blobs
-    'FileReader' in window &&
-    'Blob' in window &&
-    (function() {
-      try {
-        new Blob()
-        return true
-      } catch (e) {
-        return false
-      }
-    })(),
-    */
     formData: 'FormData' in window,
     arrayBuffer: 'ArrayBuffer' in window
   }

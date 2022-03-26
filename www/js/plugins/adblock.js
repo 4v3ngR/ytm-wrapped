@@ -4,16 +4,24 @@
   window.adblock = "loaded";
   console.log("loading adblock");
 
-  function interceptXHR(url, text) {
-    if (url.includes('youtubei/v1/player')) try {
-      var obj = JSON.parse(text);
+  function interceptXHR(state, url, data) {
+    if (url.includes('youtubei/v1/player') && state === 'response') try {
+      var obj = JSON.parse(data);
       if (obj.adPlacements) {
         delete obj.adPlacements;
-        text = JSON.stringify(obj);
+        data = JSON.stringify(obj);
       }
+      return data;
     } catch (ex) {
     }
-    return text;
+
+    if (state === 'open' && data) {
+      if (url.includes('youtubei/v1/log_event')) {
+        return false;
+      }
+    }
+
+    return data;
   }
 
   if (XMLHttpRequest.addXHRInterceptor) {
