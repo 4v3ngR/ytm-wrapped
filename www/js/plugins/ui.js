@@ -25,6 +25,10 @@
       visibility: hidden !important;
       display: none !important;
     }
+    ytmusic-mealbar-promo-renderer {
+      visibility: hidden !important;
+      display: none !important;
+    }
   `;
   styleTag.innerHTML = css;
   document.head.appendChild(styleTag);
