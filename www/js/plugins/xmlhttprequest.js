@@ -25,6 +25,7 @@
   // based off https://stackoverflow.com/questions/16959359/intercept-xmlhttprequest-and-modify-responsetext
   var rawOpen = XMLHttpRequest.prototype.open;
   var rawSetRequestHeader = XMLHttpRequest.prototype.setRequestHeader;
+  var rawSend = XMLHttpRequest.prototype.send;
 
   XMLHttpRequest.prototype.open = function(method, url, _async, username, password) {
     if (!this._hooked) {
@@ -39,6 +40,12 @@
   XMLHttpRequest.prototype.setRequestHeader = function(header, value) {
     try {
       rawSetRequestHeader.apply(this, arguments);
+    } catch (ex) {}
+  }
+
+  XMLHttpRequest.prototype.send = function() {
+    try {
+      rawSend.apply(this, arguments);
     } catch (ex) {}
   }
 

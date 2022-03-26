@@ -24,7 +24,6 @@
       ) {
         return false;
       }
-      console.log("allowing", url);
     }
 
     return data;

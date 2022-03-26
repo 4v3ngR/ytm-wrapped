@@ -41,6 +41,11 @@
   }
 
   function handleTimeUpdate(e) {
+    // seems that if we block tracking, we don't get to the end, so let's fake it
+    if (video.duration && video.currentTime + 1 >= video.duration) {
+      video.dispatchEvent(new Event('ended'));
+    }
+
     webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(
       {
         message: "timeupdate",
