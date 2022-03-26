@@ -12,7 +12,7 @@ bundle tool
 ```sh
 cordova platform add android
 ```
-or
+then
 ```sh
 npm run build:debug
 ```
