@@ -1,5 +1,6 @@
 const { App } = require("@capacitor/app");
 const { loadPlugins, injectPlugins } = require("./plugins");
+const controls = require("./controls");
 
 App.addListener('appStateChange', ({ isActive }) => {
   console.log('App state changed. Is active?', isActive);
@@ -35,6 +36,7 @@ const loadYTM = async () => {
         console.error("got ex", ex.message);
       }
       window.inAppBrowserRef.show();
+      controls.init(window.inAppBrowserRef);
     });
   }
 }

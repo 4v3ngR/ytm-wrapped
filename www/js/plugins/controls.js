@@ -73,7 +73,6 @@
   }
 
   // add global functions to allow the cordova app to control the video
-  var timeout = 0;
   window.controls = {
     play: function() {
       if (video) {
@@ -98,15 +97,6 @@
         if (video.paused) video.play();
         else video.pause();
       }
-    },
-    ping: function() {
-      if (timeout) clearTimeout(timeout);
-      timeout = setTimeout(function() {
-        if (video && !video.paused) {
-          video.pause();
-          window.close();
-        }
-      }, 5000);
     }
   }
 })();

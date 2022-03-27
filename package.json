@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "setup": "[ -d 'android' ] || npx cap add android",
-    "build": "npm run setup && webpack ./src/index.js -o www/js && npx cap sync",
+    "build": "npm run setup && webpack-cli ./src/index.js -o www/js && npx cap sync",
     "debug": "npm run build && cd android && ./gradlew assembleDebug && cp app/build/outputs/apk/debug/app-debug.apk ../ytm-debug.apk",
     "release": "npm run build && cd android && ./gradlew assembleRelease && cp app/build/outputs/apk/release/app-release-unsigned.apk ../ytm-unsigned.apk"
   },
@@ -17,7 +17,8 @@
     "@capacitor/app": "^1.1.1",
     "@capacitor/cli": "^3.4.3",
     "@capacitor/core": "^3.4.3",
-    "capacitor-music-controls-plugin": "^1.0.1",
+    "cordova-plugin-music-controls2": "^3.0.6",
+    "webpack": "^5.70.0",
     "webpack-cli": "^4.9.2"
   }
 }
