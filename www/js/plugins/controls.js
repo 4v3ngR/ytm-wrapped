@@ -17,7 +17,6 @@
       if (!video.eventsAdded) {
         video.addEventListener("play", handlePlay);
         video.addEventListener("pause", handlePause);
-        video.addEventListener("timeupdate", handleTimeUpdate);
         video.addEventListener("loadeddata", handleLoadedData);
         video.eventsAdded = true;
       }
@@ -25,38 +24,19 @@
   }
 
   function handlePlay(e) {
-    webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(
-      {
-        message: "play"
-      }
-    ));
+    dispatch("play");
   }
 
   function handlePause(e) {
-    webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(
-      {
-        message: "pause"
-      }
-    ));
-  }
-
-  function handleTimeUpdate(e) {
-    // seems that if we block tracking, we don't get to the end, so let's fake it
-    if (video.duration && video.currentTime + 1 >= video.duration) {
-      video.dispatchEvent(new Event('ended'));
-    }
-
-    webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(
-      {
-        message: "timeupdate",
-        offset: video.currentTime,
-        duration: video.duration
-      }
-    ));
+    dispatch("pause");
   }
 
   function handleLoadedData(e) {
-    var image = player.querySelector('.song-image');
+    dispatch("loadeddata");
+  }
+
+  function dispatch(message) {
+    var image = document.querySelector("div#song-image");
     if (image) image = image.querySelector('img');
     if (image) image = image.getAttribute('src');
 
@@ -65,9 +45,10 @@
 
     webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(
       {
-        message: "Loadeddata",
+        message,
         image,
         title,
+        playing: !video.paused
       }
     ));
   }
