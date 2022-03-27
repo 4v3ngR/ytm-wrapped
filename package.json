@@ -1,37 +1,22 @@
 {
-  "name": "com.wrapped.ytmusic",
-  "displayName": "TYMwrapped",
-  "version": "1.0.0",
-  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "name": "ytm-wrapped",
+  "version": "0.1.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "build:debug": "cordova build android",
-    "build:release": "cordova build android --release",
-    "package:release": "rm -f release.apks && npm run build:release && bundletool build-apks --bundle platforms/android/app/build/outputs/bundle/release/app-release.aab --output release.apks --mode=universal && mv release.apks releases.zip"
+    "setup": "[ -d 'android' ] || npx cap add android",
+    "build": "npm run setup && webpack ./src/index.js -o www/js && npx cap sync",
+    "debug": "npm run build && cd android && ./gradlew assembleDebug && cp app/build/outputs/apk/debug/app-debug.apk ../ytm-debug.apk",
+    "release": "npm run build && cd android && ./gradlew assembleRelease && cp app/build/outputs/apk/release/app-release-unsigned.apk ../ytm-unsigned.apk"
   },
-  "keywords": [
-    "ecosystem:cordova"
-  ],
-  "author": "Apache Cordova Team",
-  "license": "Apache-2.0",
-  "devDependencies": {
-    "cordova-android": "^10.1.1",
-    "cordova-electron": "^3.0.0",
-    "cordova-plugin-file": "^6.0.2",
-    "cordova-plugin-music-controls2": "^3.0.6"
-  },
-  "cordova": {
-    "platforms": [
-      "electron",
-      "android"
-    ],
-    "plugins": {
-      "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-file": {},
-      "cordova-plugin-music-controls2": {}
-    }
-  },
+  "author": "4v3ngR",
+  "license": "MIT",
   "dependencies": {
-    "cordova-plugin-inappbrowser": "^5.0.0"
+    "@capacitor-mobi/cordova-plugin-inappbrowser": "^5.0.3",
+    "@capacitor/android": "^3.4.3",
+    "@capacitor/app": "^1.1.1",
+    "@capacitor/cli": "^3.4.3",
+    "@capacitor/core": "^3.4.3",
+    "webpack-cli": "^4.9.2"
   }
 }

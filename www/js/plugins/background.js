@@ -3,7 +3,6 @@
 // Thanks for releasing it MIT
 
 (function() {
-
   Object.defineProperties(document,
     {
       'hidden': {value: false},
