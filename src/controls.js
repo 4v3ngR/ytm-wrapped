@@ -1,5 +1,4 @@
 (function() {
-
   var createdMusicControls = false;
   function createMusicControls(data) {
     createdMusicControls = true;

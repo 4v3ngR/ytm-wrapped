@@ -7,6 +7,9 @@ App.addListener('appStateChange', async ({ isActive }) => {
   if (isActive) {
     return;
   }
+  // not good enough. This executes as soon as the app is minimised,
+  // not when the app is about to exit
+  /*
   const taskId = await BackgroundTask.beforeExit(async () => {
     if (MusicControls) try {
       MusicControls.destroy(() => null, () => null);
@@ -16,7 +19,7 @@ App.addListener('appStateChange', async ({ isActive }) => {
     } catch (ex) {}
     BackgroundTask.finish({ taskId });
   });
-
+  */
 });
 
 const loadYTM = async () => {
