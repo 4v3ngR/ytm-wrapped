@@ -1,9 +1,25 @@
 const { App } = require("@capacitor/app");
+const { BackgroundTask } = require('@robingenz/capacitor-background-task');
 const { loadPlugins, injectPlugins } = require("./plugins");
 const controls = require("./controls");
 
-App.addListener('appStateChange', ({ isActive }) => {
-  console.log('App state changed. Is active?', isActive);
+App.addListener('appStateChange', async ({ isActive }) => {
+  if (isActive) {
+    return;
+  }
+  // The app state has been changed to inactive.
+  // Start the background task by calling `beforeExit`.
+  const taskId = await BackgroundTask.beforeExit(async () => {
+    if (MusicControls) try {
+      MusicControls.destroy(() => null, () => null);
+    } catch (ex) {}
+    if (window.inAppBrowserRef) try {
+      winddow.inAppBrowserRef.close();
+    } catch (ex) {}
+    // Finish the background task as soon as everything is done.
+    BackgroundTask.finish({ taskId });
+  });
+
 });
 
 App.addListener('appUrlOpen', data => {
