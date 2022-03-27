@@ -7,8 +7,6 @@ App.addListener('appStateChange', async ({ isActive }) => {
   if (isActive) {
     return;
   }
-  // The app state has been changed to inactive.
-  // Start the background task by calling `beforeExit`.
   const taskId = await BackgroundTask.beforeExit(async () => {
     if (MusicControls) try {
       MusicControls.destroy(() => null, () => null);
@@ -16,24 +14,10 @@ App.addListener('appStateChange', async ({ isActive }) => {
     if (window.inAppBrowserRef) try {
       winddow.inAppBrowserRef.close();
     } catch (ex) {}
-    // Finish the background task as soon as everything is done.
     BackgroundTask.finish({ taskId });
   });
 
 });
-
-App.addListener('appUrlOpen', data => {
-  console.log('App opened with URL:', data);
-});
-
-App.addListener('appRestoredResult', data => {
-  console.log('Restored state:', data);
-});
-
-const checkAppLaunchUrl = async () => {
-  const { url } = await App.getLaunchUrl();
-  console.log('App opened with URL: ' + url);
-};
 
 const loadYTM = async () => {
   await loadPlugins();
