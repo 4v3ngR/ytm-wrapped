@@ -1,10 +1,4 @@
 (function() {
-  window.addEventListener("message", function(e) {
-    var msg = e.data.msg;
-    if (msg === "iab_ready") {
-      window.inAppBrowserRef.addEventListener("message", handleIABMessage);
-    }
-  });
 
   var createdMusicControls = false;
   function createMusicControls(data) {
@@ -106,4 +100,10 @@
       }
     }
   }
+
+  exports = module.exports = {
+    init: (ref) => {
+      ref.addEventListener("message", handleIABMessage);
+    }
+  };
 })();

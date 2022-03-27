@@ -1,31 +1,31 @@
 # ytm-wrapped
-A simple cordova app to load yt music and to inject some scripts
+A simple capacitor app to load yt music and to inject some scripts
 
 ## dependencies
-cordova
+capacitor
 android cli development tools
-bundle tool
 
 ## building
 
-### debug build (creates an apke in platforms/android/app/build/outputs/apk/debug/app-debug.apk)
+### install dependencies
 ```sh
-cordova platform add android
-```
-then
-```sh
-npm run build:debug
+npm install
 ```
 
-### release (creates a bundle file in android/app/build/outputs/bundle/release/app-release.aab)
-* this requires bundletool
+### debug build (creates an apk ytm-debug.apk)
 ```sh
-npm run build:release
+npm run debug
 ```
 
-### release apk: (creates a zip file containing a universal apk)
+### release (creates an apk ytm-unsigned.apk)
 ```sh
-npm run package:release
+npm run release
+```
+
+### signing the apk
+This is what I use. You'll need to create an appropriate keystore
+```sh
+apksigner sign --ks my.keystore ./ytm-unsigned.apk
 ```
 
 ## plugins
