@@ -1,14 +1,17 @@
 (function() {
+  const { Plugins } = require('@capacitor/core');
+  const { CapacitorMusicControls } = Plugins;
+
   let inAppBrowserRef = null;
   let createdMusicControls = false;
 
   function createMusicControls(data) {
-    MusicControls = MusicControls;
+    if (createddMusicControls) CapacitorMusicControls.destroy();
     createdMusicControls = true;
     if (!data) data = {};
     const { title = '', image = '', playing = false } = data;
 
-    MusicControls.create({
+    CapacitorMusicControls.create({
       track: title ? title : '',
       cover: image ? image : '',
       album: '',
@@ -27,8 +30,8 @@
       notificationIcon: 'notification'
     }, () => null, () => null);
 
-    MusicControls.subscribe(action => events(JSON.parse(action)));
-    MusicControls.listen();
+    CapacitorMusicControls.removeAllListeners();
+    CapacitorMusicControls.addListener('controlsNotification', events);
   }
 
   function events(action) {
@@ -66,10 +69,10 @@
       if (!createdMusicControls) createMusicControls(obj);
       switch (obj.message) {
         case "play":
-          MusicControls.updateIsPlaying(true);
+          CapacitorMusicControls.updateIsPlaying({ isPlaying: true });
           break;
         case "pause":
-          MusicControls.updateIsPlaying(false);
+          CapacitorMusicControls.updateIsPlaying({ isPlaying: false });
           break;
       }
     }

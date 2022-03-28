@@ -22,37 +22,21 @@
     return false;
   }, true);
 
-  loop(pressKey, 60 * 1000, 10 * 1000);
-
-  function pressKey() {
-    const keyCodes = [18];
-    let key = keyCodes[getRandomInt(0, keyCodes.length)];
-    sendKeyEvent("keydown", key);
-    sendKeyEvent("keyup", key);
-  }
-
-  function sendKeyEvent (aEvent, aKey) {
-    document.dispatchEvent(new KeyboardEvent(aEvent, {
-      bubbles: true,
-      cancelable: true,
-      keyCode: aKey,
-      which: aKey,
-    }));
-  }
-
-  function loop(aCallback, aDelay, aJitter) {
-    let jitter = getRandomInt(-aJitter/2, aJitter/2);
-    let delay = Math.max(aDelay + jitter, 0);
-
-    window.setTimeout(() => {
-      aCallback();
-      loop(aCallback, aDelay, aJitter);
-    }, delay);
-  }
-
-  function getRandomInt(aMin, aMax) {
-    let min = Math.ceil(aMin);
-    let max = Math.floor(aMax);
-    return Math.floor(Math.random() * (max - min)) + min;
+  var video = null;
+  var player = document.querySelector('ytmusic-player');
+  if (player) {
+    video = player.querySelector('video');
+    if (video) {
+      if (!video.dontStopTheMusic) {
+        video.dontStopTheMusic = true;
+        video.addEventListener('timeupdate', () => {
+          const { duration, currentTime } = video;
+          if (duration && currentTime + 1 >= duration) {
+            const button = document.querySelector("tp-yt-paper-icon-button.next-button");
+            if (button) button.click();
+          }
+        });
+      }
+    }
   }
 })();
