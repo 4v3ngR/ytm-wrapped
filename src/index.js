@@ -5,7 +5,6 @@ const controls = require("./controls");
 let ref = null;
 
 App.addListener('appStateChange', async ({ isActive }) => {
-	console.log("appStateChange", isActive);
   if (ref) {
     ref.executeScript(
       {
