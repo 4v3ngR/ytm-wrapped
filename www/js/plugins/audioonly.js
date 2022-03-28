@@ -1,15 +1,21 @@
 (function() {
-	if (window.audioonly === "loaded") return;
-	window.audioonly = "loaded";
-	console.log("loading audioonly");
+  if (window.audioonly === "loaded") return;
+  window.audioonly = "loaded";
+  console.log("loading audioonly");
 
-	// this doesn't actually work
-	function forceAudioOnly(text) {
-		return text.replace(/MUSIC_VIDEO_TYPE_OMV/g, "MUSIC_VIDEO_TYPE_ATV");
-	}
+  function forceAudioOnly(state, url, data) {
+    if (url.includes('youtubei/v1/player') && state === 'response') try {
+      var obj = JSON.parse(data);
+      if (obj.videoDetails) {
+        obj.videoDetails.musicVideoType = "MUSIC_VIDEO_TYPE_ATV";
+        data = JSON.stringify(obj);
+      }
+      return data;
+    } catch (ex) {}
+    return data;
+  }
 
-	if (window.fetch && window.fetch.addInterceptor) {
-		window.fetch.addInterceptor(forceAudioOnly);
-	}
-
+  if (XMLHttpRequest.addXHRInterceptor) {
+    XMLHttpRequest.addXHRInterceptor(forceAudioOnly);
+  }
 })();
