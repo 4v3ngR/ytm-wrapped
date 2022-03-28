@@ -1,45 +1,39 @@
 const { App } = require("@capacitor/app");
-const { BackgroundTask } = require('@robingenz/capacitor-background-task');
 const { loadPlugins, injectPlugins } = require("./plugins");
 const controls = require("./controls");
 
+let ref = null;
+
 App.addListener('appStateChange', async ({ isActive }) => {
-  if (isActive) {
-    return;
+	console.log("appStateChange", isActive);
+  if (ref) {
+    ref.executeScript(
+      {
+        code: `window.postMessage({ message: 'statechanged', active: ${isActive}});`
+      },
+      () => null
+    );
   }
-  // not good enough. This executes as soon as the app is minimised,
-  // not when the app is about to exit
-  /*
-  const taskId = await BackgroundTask.beforeExit(async () => {
-    if (MusicControls) try {
-      MusicControls.destroy(() => null, () => null);
-    } catch (ex) {}
-    if (window.inAppBrowserRef) try {
-      winddow.inAppBrowserRef.close();
-    } catch (ex) {}
-    BackgroundTask.finish({ taskId });
-  });
-  */
 });
 
 const loadYTM = async () => {
   await loadPlugins();
-  if (!window.inAppBrowserRef) {
-    window.inAppBrowserRef = cordova.InAppBrowser.open(
+  if (!ref) {
+    ref = cordova.InAppBrowser.open(
       'https://music.youtube.com',
       '_blank',
       'location=no,hidden=true,hardwareback=yes'
     );
 
-    window.inAppBrowserRef.addEventListener('loadstop', function() {
-      window.inAppBrowserRef.insertCSS({code:"body{background-color:black;}"});
+    ref.addEventListener('loadstop', function() {
+      ref.insertCSS({code:"body{background-color:black;}"});
       try {
-        injectPlugins(window.inAppBrowserRef);
+        injectPlugins(ref);
       } catch (ex) {
         console.error("got ex", ex.message);
       }
-      window.inAppBrowserRef.show();
-      controls.init(window.inAppBrowserRef);
+      ref.show();
+      controls.init(ref);
     });
   }
 }

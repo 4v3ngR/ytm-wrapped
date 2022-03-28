@@ -2,7 +2,9 @@
   const { Plugins } = require('@capacitor/core');
   const { CapacitorMusicControls } = Plugins;
 
+  let inAppBrowserRef = null;
   var createdMusicControls = false;
+
   function createMusicControls(data) {
     createdMusicControls = true;
     if (!data) data = {};
@@ -35,25 +37,25 @@
     const message = action.message;
     switch(message) {
       case 'music-controls-next':
-        window.inAppBrowserRef.executeScript({code: "window.controls.next();"}, () => null);
+        inAppBrowserRef.executeScript({code: "window.controls.next();"}, () => null);
         break;
       case 'music-controls-previous':
-        window.inAppBrowserRef.executeScript({code: "window.controls.prev();"}, () => null);
+        inAppBrowserRef.executeScript({code: "window.controls.prev();"}, () => null);
         break;
       case 'music-controls-pause':
-        window.inAppBrowserRef.executeScript({code: "window.controls.pause();"}, () => null);
+        inAppBrowserRef.executeScript({code: "window.controls.pause();"}, () => null);
         break;
       case 'music-controls-play':
-        window.inAppBrowserRef.executeScript({code: "window.controls.play();"}, () => null);
+        inAppBrowserRef.executeScript({code: "window.controls.play();"}, () => null);
         break;
       case 'music-controls-toggle-play-pause' :
-        window.inAppBrowserRef.executeScript({code: "window.controls.playpause();"}, () => null);
+        inAppBrowserRef.executeScript({code: "window.controls.playpause();"}, () => null);
         break;
       case 'music-controls-headset-unplugged':
-        window.inAppBrowserRef.executeScript({code: "window.controls.pause();"}, () => null);
+        inAppBrowserRef.executeScript({code: "window.controls.pause();"}, () => null);
         break;
       case 'music-controls-headset-plugged':
-        window.inAppBrowserRef.executeScript({code: "window.controls.play();"}, () => null);
+        inAppBrowserRef.executeScript({code: "window.controls.play();"}, () => null);
         break;
       default:
         break;
@@ -81,6 +83,7 @@
 
   exports = module.exports = {
     init: (ref) => {
+      inAppBrowserRef = ref;
       ref.addEventListener("message", handleIABMessage);
     }
   };
