@@ -6,7 +6,7 @@
   let createdMusicControls = false;
 
   function createMusicControls(data) {
-    if (createddMusicControls) CapacitorMusicControls.destroy();
+    if (createdMusicControls) CapacitorMusicControls.destroy();
     createdMusicControls = true;
     if (!data) data = {};
     const { title = '', image = '', playing = false } = data;
@@ -38,25 +38,24 @@
     const message = action.message;
     switch(message) {
       case 'music-controls-next':
+      case 'music-controls-media-button-next':
         inAppBrowserRef.executeScript({code: "window.controls.next();"}, () => null);
         break;
       case 'music-controls-previous':
+      case 'music-controls-media-button-previous':
         inAppBrowserRef.executeScript({code: "window.controls.prev();"}, () => null);
         break;
       case 'music-controls-pause':
-        inAppBrowserRef.executeScript({code: "window.controls.pause();"}, () => null);
-        break;
-      case 'music-controls-play':
-        inAppBrowserRef.executeScript({code: "window.controls.play();"}, () => null);
-        break;
-      case 'music-controls-toggle-play-pause' :
-        inAppBrowserRef.executeScript({code: "window.controls.playpause();"}, () => null);
-        break;
       case 'music-controls-headset-unplugged':
         inAppBrowserRef.executeScript({code: "window.controls.pause();"}, () => null);
         break;
+      case 'music-controls-play':
       case 'music-controls-headset-plugged':
         inAppBrowserRef.executeScript({code: "window.controls.play();"}, () => null);
+        break;
+      case 'music-controls-toggle-play-pause':
+      case 'music-controls-media-button-play-pause':
+        inAppBrowserRef.executeScript({code: "window.controls.playpause();"}, () => null);
         break;
       default:
         break;
