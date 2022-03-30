@@ -6,7 +6,11 @@
   let createdMusicControls = false;
 
   function createMusicControls(data) {
-    if (createdMusicControls) CapacitorMusicControls.destroy();
+    if (createdMusicControls) {
+      CapacitorMusicControls.removeAllListeners();
+      CapacitorMusicControls.destroy();
+    }
+
     createdMusicControls = true;
     if (!data) data = {};
     const { title = '', image = '', playing = false } = data;
@@ -30,7 +34,6 @@
       notificationIcon: 'notification'
     }, () => null, () => null);
 
-    CapacitorMusicControls.removeAllListeners();
     CapacitorMusicControls.addListener('controlsNotification', events);
   }
 

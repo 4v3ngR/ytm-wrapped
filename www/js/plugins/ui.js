@@ -25,6 +25,7 @@
       visibility: hidden !important;
       display: none !important;
     }
+    ytmusic-av-toggle,
     ytmusic-mealbar-promo-renderer {
       visibility: hidden !important;
       display: none !important;
