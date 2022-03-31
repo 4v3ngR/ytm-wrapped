@@ -1,0 +1,10 @@
+[
+	{
+		"pkg": "@capacitor/app",
+		"classpath": "com.capacitorjs.plugins.app.AppPlugin"
+	},
+	{
+		"pkg": "capacitor-music-controls-plugin",
+		"classpath": "com.ingageco.capacitormusiccontrols.CapacitorMusicControls"
+	}
+]
