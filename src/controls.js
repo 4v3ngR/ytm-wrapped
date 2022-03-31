@@ -31,7 +31,8 @@
       prevIcon: 'media_prev',
       nextIcon: 'media_next',
       closeIcon: 'media_close',
-      notificationIcon: 'notification'
+      notificationIcon: 'notification',
+      iconsColor: 0xA00000 // seems in android 12, this sets the background color
     }, () => null, () => null);
 
     CapacitorMusicControls.addListener('controlsNotification', events);

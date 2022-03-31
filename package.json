@@ -17,7 +17,7 @@
     "@capacitor/app": "^1.1.1",
     "@capacitor/cli": "^3.4.3",
     "@capacitor/core": "^3.4.3",
-    "capacitor-music-controls-plugin": "^1.0.1",
+    "capacitor-music-controls-plugin": "github:4v3ngR/capacitor-music-controls-plugin-new",
     "webpack": "^5.70.0",
     "webpack-cli": "^4.9.2"
   }
