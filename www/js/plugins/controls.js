@@ -37,6 +37,7 @@
           if (d === duration) {
             dispatch("timeupdate");
           } else {
+            duration = d;
             dispatch("loadeddata");
             // this will help with the audio only plugin
             window.dispatchEvent("mediahaschanged");
@@ -68,8 +69,8 @@
         image,
         title,
         playing: !video.paused,
-        elapsed: video.currentTime * 1000,
-        duration: video.duration
+        elapsed,
+        duration
       }
     ));
   }
