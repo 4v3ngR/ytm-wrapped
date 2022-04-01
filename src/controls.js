@@ -10,23 +10,24 @@
     const { title = '', image = '', playing = false, duration = 0 } = data;
 
     if (!duration) return;
+
     if (createdMusicControls) {
       CapacitorMusicControls.removeAllListeners();
       CapacitorMusicControls.destroy();
+      createdMusicControls = false;
     }
 
-    createdMusicControls = true;
     CapacitorMusicControls.create({
       track: title ? title : '',
       cover: image ? image : '',
       album: '',
       artist: '',
-      ticker: '',
+      ticker: 'YouTube music - wrapped for you',
       hasPrev: true,
       hasNext: true,
       hasClose: false,
       isPlaying: playing,
-      dismissable: true,
+      dismissable: false,
       playIcon: 'media_play',
       pauseIcon: 'media_pause',
       prevIcon: 'media_prev',
@@ -34,10 +35,11 @@
       closeIcon: 'media_close',
       notificationIcon: 'notification',
       duration: duration ? duration : 0,
-      iconsColor: 0xA00000 // seems in android 12, this sets the background color
+      iconsColor: -1
     }, () => null, () => null);
 
     CapacitorMusicControls.addListener('controlsNotification', events);
+    createdMusicControls = true;
   }
 
   function events(action) {

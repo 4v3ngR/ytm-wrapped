@@ -1,4 +1,8 @@
 (function() {
+  let elapsed = 0;
+  let duration = 0;
+  let dodgyTimeUpdateInterval = 0;
+
   console.log("video plugin loaded");
   var video = null;
   var player = document.querySelector('ytmusic-player');
@@ -17,8 +21,6 @@
       if (!video.eventsAdded) {
         video.addEventListener("play", handlePlay);
         video.addEventListener("pause", handlePause);
-        video.addEventListener("loadeddata", handleLoadedData);
-        video.addEventListener("timeupdate", handleTimeupdate);
         video.eventsAdded = true;
       }
     }
@@ -26,18 +28,30 @@
 
   function handlePlay(e) {
     dispatch("play");
+    if (!dodgyTimeUpdateInterval) {
+      dodgyTimeUpdateInterval = setInterval(() => {
+        slider = document.querySelector('tp-yt-paper-slider#progress-bar');
+        if (slider) {
+          const d = parseInt(slider.getAttribute("aria-valuemax"), 10);
+          elapsed = parseInt(slider.getAttribute("aria-valuenow"), 10);
+          if (d === duration) {
+            dispatch("timeupdate");
+          } else {
+            dispatch("loadeddata");
+            // this will help with the audio only plugin
+            window.dispatchEvent("mediahaschanged");
+          }
+        }
+      }, 500);
+    }
   }
 
   function handlePause(e) {
     dispatch("pause");
-  }
-
-  function handleLoadedData(e) {
-    dispatch("loadeddata");
-  }
-
-  function handleTimeupdate(e) {
-    dispatch("timeupdate");
+    if (dodgyTimeUpdateInterval) {
+      clearInterval(dodgyTimeUpdateInterval);
+      dodgyTimeUpdateInterval = 0;
+    }
   }
 
   function dispatch(message) {
@@ -55,7 +69,7 @@
         title,
         playing: !video.paused,
         elapsed: video.currentTime * 1000,
-        duration: video.duration * 1000
+        duration: video.duration
       }
     ));
   }
