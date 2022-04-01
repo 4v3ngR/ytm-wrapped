@@ -7,7 +7,13 @@
 
   function createMusicControls(data) {
     if (!data) data = {};
-    const { title = '', image = '', playing = false, duration = 0 } = data;
+    const {
+      title = '',
+      artist = '',
+      image = '',
+      playing = false,
+      duration = 0
+    } = data;
 
     if (!duration) return;
 
@@ -17,11 +23,12 @@
       createdMusicControls = false;
     }
 
+    const [ a, b ] = artist.split('•');
     CapacitorMusicControls.create({
       track: title ? title : '',
       cover: image ? image : '',
-      album: '',
-      artist: '',
+      album: b ? b : '',
+      artist: a ? a : '',
       ticker: 'YouTube music - wrapped for you',
       hasPrev: true,
       hasNext: true,

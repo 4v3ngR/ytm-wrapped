@@ -2,6 +2,7 @@
   let elapsed = 0;
   let duration = 0;
   let dodgyTimeUpdateInterval = 0;
+  let title = "";
 
   console.log("video plugin loaded");
   var video = null;
@@ -15,7 +16,7 @@
         handlePlay(null);
       }
       if (video.duration) {
-        handleLoadedData(null);
+        dispatch('loadeddata');
       }
 
       if (!video.eventsAdded) {
@@ -30,17 +31,21 @@
     dispatch("play");
     if (!dodgyTimeUpdateInterval) {
       dodgyTimeUpdateInterval = setInterval(() => {
+        let t = document.querySelector('yt-formatted-string.title.style-scope.ytmusic-player-bar');
+        if (t) t = t.innerText;
+
         slider = document.querySelector('tp-yt-paper-slider#progress-bar');
         if (slider) {
           const d = parseInt(slider.getAttribute("aria-valuemax"), 10);
           elapsed = parseInt(slider.getAttribute("aria-valuenow"), 10);
-          if (d === duration) {
+          if (d === duration && t === title) {
             dispatch("timeupdate");
           } else {
             duration = d;
+            title = t;
             dispatch("loadeddata");
             // this will help with the audio only plugin
-            window.dispatchEvent("mediahaschanged");
+            window.dispatchEvent(new Event("mediahaschanged"));
           }
         }
       }, 500);
@@ -60,14 +65,15 @@
     if (image) image = image.querySelector('img');
     if (image) image = image.getAttribute('src');
 
-    var title = document.querySelector('yt-formatted-string.title.style-scope.ytmusic-player-bar');
-    if (title) title = title.innerText;
+    let artist = document.querySelector('span.byline-wrapper.style-scope.ytmusic-player-bar');
+    if (artist) artist = artist.innerText;
 
     webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(
       {
         message,
         image,
         title,
+        artist,
         playing: !video.paused,
         elapsed,
         duration
