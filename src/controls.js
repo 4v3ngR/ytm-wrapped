@@ -6,15 +6,16 @@
   let createdMusicControls = false;
 
   function createMusicControls(data) {
+    if (!data) data = {};
+    const { title = '', image = '', playing = false, duration = 0 } = data;
+
+    if (!duration) return;
     if (createdMusicControls) {
       CapacitorMusicControls.removeAllListeners();
       CapacitorMusicControls.destroy();
     }
 
     createdMusicControls = true;
-    if (!data) data = {};
-    const { title = '', image = '', playing = false } = data;
-
     CapacitorMusicControls.create({
       track: title ? title : '',
       cover: image ? image : '',
@@ -32,6 +33,7 @@
       nextIcon: 'media_next',
       closeIcon: 'media_close',
       notificationIcon: 'notification',
+      duration: duration ? duration : 0,
       iconsColor: 0xA00000 // seems in android 12, this sets the background color
     }, () => null, () => null);
 
@@ -69,13 +71,20 @@
   function handleIABMessage(e) {
     let obj = e.data;
     if (obj.message) {
-      if (!createdMusicControls) createMusicControls(obj);
       switch (obj.message) {
         case "play":
-          CapacitorMusicControls.updateIsPlaying({ isPlaying: true });
+        case "timeupdate":
+          if (createdMusicControls) {
+            CapacitorMusicControls.updateIsPlaying({ isPlaying: true, elapsed: obj.elapsed });
+          }
           break;
         case "pause":
-          CapacitorMusicControls.updateIsPlaying({ isPlaying: false });
+          if (createdMusicControls) {
+            CapacitorMusicControls.updateIsPlaying({ isPlaying: false, elapsed: obj.elapsed });
+          }
+          break;
+        case "loadeddata":
+          createMusicControls(obj);
           break;
       }
     }

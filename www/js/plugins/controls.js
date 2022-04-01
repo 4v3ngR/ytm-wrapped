@@ -18,6 +18,7 @@
         video.addEventListener("play", handlePlay);
         video.addEventListener("pause", handlePause);
         video.addEventListener("loadeddata", handleLoadedData);
+        video.addEventListener("timeupdate", handleTimeupdate);
         video.eventsAdded = true;
       }
     }
@@ -35,6 +36,10 @@
     dispatch("loadeddata");
   }
 
+  function handleTimeupdate(e) {
+    dispatch("timeupdate");
+  }
+
   function dispatch(message) {
     var image = document.querySelector("div#song-image");
     if (image) image = image.querySelector('img');
@@ -48,7 +53,9 @@
         message,
         image,
         title,
-        playing: !video.paused
+        playing: !video.paused,
+        elapsed: video.currentTime * 1000,
+        duration: video.duration * 1000
       }
     ));
   }
