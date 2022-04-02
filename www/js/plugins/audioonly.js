@@ -13,9 +13,8 @@
     return res;
   }
 
-  let thumbnail = "";
   window.addEventListener("mediahaschanged", () => {
-    if (thumbnail) {
+    if (window.thumbnail_url) {
       const player = document.querySelector("ytmusic-player");
       if (player) {
         let cover = player.querySelector("img#cover-image");
@@ -30,7 +29,7 @@
           }
         }
 
-        if (cover) cover.setAttribute("src", thumbnail);
+        if (cover) cover.setAttribute("src", window.thumbnail_url);
         player.removeAttribute("video-mode_");
 
         const songimg = player.querySelector("div#song-image");
@@ -43,7 +42,7 @@
     if (url.includes('youtubei/v1/player') && state === 'response') try {
       var obj = JSON.parse(data);
       if (obj.videoDetails) {
-        thumbnail = getBestThumbnail(obj.videoDetails.thumbnail.thumbnails).url;
+        window.thumbnail_url = getBestThumbnail(obj.videoDetails.thumbnail.thumbnails).url;
         obj.videoDetails.musicVideoType = "MUSIC_VIDEO_TYPE_ATV";
         data = JSON.stringify(obj);
       }

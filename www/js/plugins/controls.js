@@ -61,17 +61,13 @@
   }
 
   function dispatch(message) {
-    var image = document.querySelector("div#song-image");
-    if (image) image = image.querySelector('img');
-    if (image) image = image.getAttribute('src');
-
     let artist = document.querySelector('span.byline-wrapper.style-scope.ytmusic-player-bar');
     if (artist) artist = artist.innerText;
 
     webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(
       {
         message,
-        image,
+        image: window.thumbnail_url,
         title,
         artist,
         playing: !video.paused,

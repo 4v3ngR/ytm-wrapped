@@ -12,6 +12,7 @@
       } catch (ex) {}
     }, 100);
   }
+
   Object.defineProperties(document,
     {
       'hidden': {value: false},
@@ -51,23 +52,6 @@
     return false;
   }, true);
 
-  var video = null;
-  var player = document.querySelector('ytmusic-player');
-  if (player) {
-    video = player.querySelector('video');
-    if (video) {
-      if (!video.dontStopTheMusic) {
-        video.dontStopTheMusic = true;
-        video.addEventListener('timeupdate', () => {
-          const { duration, currentTime } = video;
-          if (duration && currentTime + 1 >= duration) {
-            const button = document.querySelector("tp-yt-paper-icon-button.next-button");
-            if (button) button.click();
-          }
-        });
-      }
-    }
-  }
   loop(pressKey, 60 * 1000, 10 * 1000);
 
   function pressKey() {

@@ -17,14 +17,8 @@
 
     if (!duration) return;
 
-    if (createdMusicControls) {
-      CapacitorMusicControls.removeAllListeners();
-      CapacitorMusicControls.destroy();
-      createdMusicControls = false;
-    }
-
     const [ a, b ] = artist.split('•');
-    CapacitorMusicControls.create({
+    const metadata = {
       track: title ? title : '',
       cover: image ? image : '',
       album: b ? b : '',
@@ -41,11 +35,16 @@
       nextIcon: 'media_next',
       closeIcon: 'media_close',
       notificationIcon: 'notification',
-      duration: duration ? duration : 0,
+      duration: (duration ? duration : 0) * 1000,
       iconsColor: -1
-    }, () => null, () => null);
+    };
 
-    CapacitorMusicControls.addListener('controlsNotification', events);
+    if (createdMusicControls) {
+      CapacitorMusicControls.updateMetadata(metadata, () => null, () => null);
+    } else {
+      CapacitorMusicControls.create(metadata, () => null, () => null);
+      CapacitorMusicControls.addListener('controlsNotification', events);
+    }
     createdMusicControls = true;
   }
 
@@ -72,8 +71,6 @@
       case 'music-controls-media-button-play-pause':
         inAppBrowserRef.executeScript({code: "window.controls.playpause();"}, () => null);
         break;
-      default:
-        break;
     }
   }
 
@@ -84,12 +81,12 @@
         case "play":
         case "timeupdate":
           if (createdMusicControls) {
-            CapacitorMusicControls.updateIsPlaying({ isPlaying: true, elapsed: obj.elapsed });
+            CapacitorMusicControls.updateState({ isPlaying: true, elapsed: obj.elapsed * 1000 });
           }
           break;
         case "pause":
           if (createdMusicControls) {
-            CapacitorMusicControls.updateIsPlaying({ isPlaying: false, elapsed: obj.elapsed });
+            CapacitorMusicControls.updateState({ isPlaying: false, elapsed: obj.elapsed * 1000 });
           }
           break;
         case "loadeddata":
