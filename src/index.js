@@ -15,36 +15,37 @@ App.addListener('appStateChange', async ({ isActive }) => {
   }
 });
 
+const loadstopHandler = () => {
+  ref.insertCSS({code:"body{background-color:black;}"});
+  try {
+    injectPlugins(ref);
+  } catch (ex) {
+    console.error("got ex", ex.message);
+  }
+  ref.show();
+  controls.init(ref);
+}
+
+const exitHandler = () => {
+  App.exitApp();
+}
+
 const loadYTM = async () => {
-  await loadPlugins();
   if (!ref) {
-    ref = cordova.InAppBrowser.open(
+    window.blah = ref = cordova.InAppBrowser.open(
       'https://music.youtube.com',
       '_blank',
       'location=no,hidden=true,hardwareback=yes'
     );
 
-    ref.addEventListener('loadstop', function() {
-      ref.insertCSS({code:"body{background-color:black;}"});
-      try {
-        injectPlugins(ref);
-      } catch (ex) {
-        console.error("got ex", ex.message);
-      }
-      ref.show();
-      controls.init(ref);
-    });
-
-    ref.addEventListener('exit', function() {
-      if (navigator.app) {
-        navigator.app.exitApp();
-      } else if (navigator.device) {
-        navigator.device.exitApp();
-      } else {
-        window.close();
-      }
-    });
+    ref.addEventListener('loadstop', loadstopHandler);
+    ref.addEventListener('exit', exitHandler);
   }
 }
 
-loadYTM();
+const main = async () => {
+  await loadPlugins();
+  loadYTM();
+}
+
+main();

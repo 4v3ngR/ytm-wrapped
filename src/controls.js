@@ -97,9 +97,13 @@
   }
 
   exports = module.exports = {
-		setref: (ref) => {
-			inAppBrowser = ref;
-		},
+    close: () => {
+      inAppBrowserRef.removeEventListener("message", handleIABMessage);
+      CapacitorMusicControls.removeAllListeners();
+      CapacitorMusicControls.destroy();
+      createdMusicControls = null;
+      inAppBrowserRef = null;
+    },
     init: (ref) => {
       inAppBrowserRef = ref;
       ref.addEventListener("message", handleIABMessage);
