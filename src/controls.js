@@ -97,6 +97,9 @@
   }
 
   exports = module.exports = {
+		setref: (ref) => {
+			inAppBrowser = ref;
+		},
     init: (ref) => {
       inAppBrowserRef = ref;
       ref.addEventListener("message", handleIABMessage);
