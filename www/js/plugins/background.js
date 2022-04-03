@@ -3,16 +3,6 @@
 // Thanks for releasing it MIT
 
 (function() {
-  if (!window.subscriberInterval) {
-    window.subscriberInterval = setInterval(function() {
-      try {
-        window.yt.config_.IS_SUBSCRIBER = true;
-        clearInterval(window.subscriberInterval);
-        window.subscriberInterval = null;
-      } catch (ex) {}
-    }, 100);
-  }
-
   Object.defineProperties(document,
     {
       'hidden': {value: false},

@@ -7,7 +7,8 @@
     "adblock.js": null,
     "audioonly.js": null,
     "ui.js": null,
-    "controls.js": null
+    "controls.js": null,
+    "config.js": null
   };
 
   const loadPlugin = async (plugin) => {

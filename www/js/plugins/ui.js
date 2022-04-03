@@ -31,52 +31,77 @@
         visibility: hidden !important;
         display: none !important;
       }
+      div#extraControls {
+        position: relative;
+        left: 0px;
+        right: 0px;
+        height: 32px;
+        overflow: hidden;
+        display: flex;
+      }
+      tp-yt-paper-slider {
+        width: calc(100% - 100px) !important;
+      }
+      ytmusic-like-button-renderer {
+        display: inherit !important;
+      }
+      .dislike, .like {
+        width: 32px !important;
+        height: 32px !important;
+        padding: 4px !important;
+      }
+      @media (min-width: 618px) and (max-width: 1149px) {
+        div#extraControls {
+          position: fixed !important;
+          top: 0px;
+        }
+        .dislike, .like {
+          width: 40px !important;
+          height: 40px !important;
+          padding: 8px !important;
+        }
+        .dislike > #icon, .like > #icon {
+          width: 24px !important;
+          height: 24px !important;
+        }
+      }
     `;
     styleTag.innerHTML = css;
     document.head.appendChild(styleTag);
   };
 
-  let sidePanelShowing = true;
-  const hideSidePanel = () => {
-    const sidePanel = document.querySelector('div.side-panel.modular.style-scope.ytmusic-player-page');
-    if (sidePanel) {
-      sidePanel.setAttribute('style', 'position: relative; top: 56%;');
-      sidePanelShowing = false;
-    }
-  };
-
-  const showSidePanel = () => {
-    const sidePanel = document.querySelector('div.side-panel.modular.style-scope.ytmusic-player-page');
-    if (sidePanel) {
-      sidePanel.removeAttribute('style');
-      sidePanelShowing = true;
-    }
-  };
-
-  let clickedTab = null;
-  const toggleSidePanel = (tab) => {
-    if (sidePanelShowing && tab === clickedTab) {
-      hideSidePanel();
-    } else {
-      showSidePanel();
-    }
-    clickedTab = tab;
-  }
-
   const setupPlayerPage = () => {
-    const tabBar = document.querySelector('tp-yt-paper-tabs > #tabsContainer');
-    if (tabBar) {
-      hideSidePanel();
-      tabBar.addEventListener('click', onTabBarClicked);
-    }
-  };
+    const playerPage = document.querySelector("ytmusic-player-page");
+    if (playerPage) {
+      let extraControls = playerPage.querySelector("div#extraControls");
+      if (!extraControls){
+        extraControls = document.createElement("div");
+        extraControls.setAttribute("id", "extraControls");
+        const mainPanel = playerPage.querySelector("div#main-panel");
+        mainPanel.parentNode.insertBefore(extraControls, mainPanel.nextSibling);
 
-  const onTabBarClicked = (e) => {
-    toggleSidePanel(e.target);
+        const expandingMenu = document.querySelector("ytmusic-player-expanding-menu");
+        if (expandingMenu) {
+          let node = expandingMenu.firstChild;
+          while (node) {
+            const nextSibling = node.nextSibling;
+            expandingMenu.removeChild(node);
+            extraControls.appendChild(node);
+            node = nextSibling;
+          }
+        }
+        const likeButtonRenderer = document.querySelector('ytmusic-like-button-renderer#like-button-renderer');
+        if (likeButtonRenderer) {
+          likeButtonRenderer.parentNode.removeChild(likeButtonRenderer);
+          extraControls.appendChild(likeButtonRenderer);
+        }
+      }
+
+      const progressBar = playerPage.querySelector("tp-yt-paper-slider#progress-bar")
+      if (progressBar) progressBar.setAttribute("focused", "");
+    }
   };
 
   initStaticStyle();
-  /*
   setupPlayerPage();
-  */
 })();
