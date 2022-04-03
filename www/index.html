@@ -1,8 +1,39 @@
 <html>
   <head>
+    <style>
+      body {
+        overflow: hidden;
+      }
+      #splash {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+      }
+      #vcentered {
+        position: absolute;
+        top: 50%;
+        left: 0px;
+        right: 0px;
+        display: table-cell;
+        vertical-align: middle;
+      }
+      #status {
+        background: black;
+        color: green;
+        margin: auto auto;
+        text-align: center;
+      }
+    </style>
     <script src="js/486.js"></script>
     <script src="js/main.js"></script>
   </head>
   <body style="margin: 0px; background: black;">
+    <div id="splash">
+      <div id="vcentered">
+        <div id="status">Loading YouTube Music...</div>
+      </div>
+    </div>
   </body>
 </html>

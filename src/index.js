@@ -15,6 +15,13 @@ App.addListener('appStateChange', async ({ isActive }) => {
   }
 });
 
+const setStatus = (text) => {
+  const splash = document.querySelector('#status');
+  if (splash) {
+    splash.innerText = text;
+  }
+}
+
 const loadstopHandler = () => {
   ref.insertCSS({code:"body{background-color:black;}"});
   try {
@@ -27,6 +34,7 @@ const loadstopHandler = () => {
 }
 
 const exitHandler = () => {
+  setStatus("exiting...");
   App.exitApp();
 }
 
