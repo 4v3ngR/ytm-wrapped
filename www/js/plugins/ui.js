@@ -16,9 +16,6 @@
       style.innerHTML = text.replace(/935px/g, '617px').replace(/936px/g, '618px');
     });
 
-    if (window.uichanges === "loaded") return;
-    window.uichanges = "loaded";
-
     let styleTag = document.createElement("style");
     let css = `
       .next-items-button,
@@ -50,10 +47,87 @@
         height: 32px !important;
         padding: 4px !important;
       }
-      @media (min-width: 618px) and (max-width: 1149px) {
+      @media (max-width: 617px) {
+        ytmusic-app-layout[expanded-controls] div#extraControls {
+          position: absolute;
+          top: 56.25vw;
+          bottom: 40px;
+          height: auto;
+        }
+        ytmusic-app-layout[expanded-controls] tp-yt-paper-slider {
+          position: absolute;
+          height: 32px;
+          left: 0px;
+          bottom: 0px;
+          width: calc(100% - 32px) !important;
+        }
+        ytmusic-app-layout[expanded-controls] tp-yt-paper-icon-button#expand-volume {
+          position: absolute;
+          right: 10px;
+          bottom: 0px;
+        }
+        ytmusic-app-layout[expanded-controls] tp-yt-paper-icon-button#expand-shuffle {
+          position: absolute;
+          top: 300px;
+          right: 48px;
+        }
+        ytmusic-app-layout[expanded-controls] tp-yt-paper-icon-button#expand-repeat {
+          position: absolute;
+          top: 300px;
+          left: 48px;
+        }
+        ytmusic-app-layout[expanded-controls] ytmusic-like-button-renderer#like-button-renderer {
+          position: absolute;
+          left: 64px;
+          width: auto;
+          right: 64px;
+          bottom: 50%;
+          display: flex !important;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+        ytmusic-app-layout[expanded-controls] div.side-panel {
+          position: absolute !important;
+          top: calc(100vh - 207px) !important;
+        }
+        ytmusic-app-layout[player-page-open_][expanded-controls] div.left-controls-buttons {
+          position: fixed;
+          top: calc(-100vh + 56.25vw + 128px);
+          left: 80px;
+          right: 80px;
+          bottom: 132px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-evenly;
+        }
+        ytmusic-app-layout[player-page-open_][expanded-controls] tp-yt-paper-icon-button#play-pause-button {
+          width: 64px;
+          height: 64px;
+        }
+        ytmusic-app-layout[player-page-open_][expanded-controls] tp-yt-paper-slider#progress-bar {
+          position: fixed;
+          top: calc(-100vh + 56.25vw + 408px);
+          width: auto !important;
+          left: 48px;
+          right: 48px;
+        }
+        ytmusic-app-layout[player-page-open_][expanded-controls] div.content-info-wrapper.style-scope.ytmusic-player-bar {
+          position: fixed;
+          top: calc(-100vh + 56.25vw + 200px);
+          align-items: center;
+          left: 48px;
+          right: 48px;
+        }
+        ytmusic-app-layout[player-page-open_][expanded-controls] div.middle-controls-buttons {
+          position: fixed;
+          left: 8px;
+        }
+      }
+      @media (min-width: 618px) {
         div#extraControls {
           position: fixed !important;
           top: 0px;
+          height: 32px !important;
         }
         .dislike, .like {
           width: 40px !important;
@@ -65,9 +139,50 @@
           height: 24px !important;
         }
       }
+      tp-yt-paper-icon-button.expand-button {
+        visibility: hidden;
+        display: none;
+      }
     `;
     styleTag.innerHTML = css;
     document.head.appendChild(styleTag);
+  };
+
+  let showingExpandedControls = false
+  const showExpandedControls = () => {
+    const node = document.querySelector("ytmusic-app-layout");
+    if (node) {
+      console.log("showing expanded controls");
+      showingExpandedControls = true;
+      node.setAttribute("expanded-controls", "");
+    }
+  };
+
+  const hideExpandedControls = () => {
+    const node = document.querySelector("ytmusic-app-layout");
+    if (node) {
+      console.log("hiding expanded controls");
+      showingExpandedControls = false;
+      node.removeAttribute("expanded-controls");
+    }
+  };
+
+  let clickedTab = null;
+  const toggleSidePanel = (tab) => {
+    const node = document.querySelector("ytmusic-app-layout");
+    console.log("here1");
+    if (node.hasAttribute("expanded-controls")) {
+    console.log("here2");
+      hideExpandedControls();
+    } else if (tab === clickedTab) {
+    console.log("here3");
+      showExpandedControls();
+    }
+    clickedTab = tab;
+  };
+
+  const onTabBarClicked = (e) => {
+    toggleSidePanel(e.target);
   };
 
   const setupPlayerPage = () => {
@@ -97,11 +212,22 @@
         }
       }
 
+      const tabBar = document.querySelector('tp-yt-paper-tabs > #tabsContainer');
+      if (tabBar) {
+        showExpandedControls();
+        console.log("creating event listener");
+        tabBar.addEventListener('click', onTabBarClicked);
+      }
+
       const progressBar = playerPage.querySelector("tp-yt-paper-slider#progress-bar")
       if (progressBar) progressBar.setAttribute("focused", "");
     }
   };
 
   initStaticStyle();
+
+  if (window.uichanges === "loaded") return;
+  window.uichanges = "loaded";
+
   setupPlayerPage();
 })();
