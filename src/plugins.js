@@ -8,7 +8,8 @@
     "audioonly.js": null,
     "ui.js": null,
     "controls.js": null,
-    "config.js": null
+    "config.js": null,
+    "swipe.js": null
   };
 
   const loadPlugin = async (plugin) => {
