@@ -24,12 +24,28 @@
             cover = document.createElement("img");
             cover.setAttribute("id", "cover-image");
             cover.setAttribute("class", "style-scope yt-img-shadow");
-            cover.setAttribute("style", "height: 192px; object-fit: scale-down;");
+            cover.setAttribute("style", "height: 100%; object-fit: scale-down;");
             img.parentNode.replaceChild(cover, img);
           }
         }
 
         if (cover) cover.setAttribute("src", window.thumbnail_url);
+
+        const content = document.querySelector('div.content');
+        if (content) {
+          let background = document.querySelector('div#background-image');
+          if (!background) {
+            background = document.createElement('div');
+            background.setAttribute("id", "background-image");
+            background.setAttribute("class", "background-image");
+            content.setAttribute("style", "background: transparent");
+            content.parentNode.insertBefore(background, content);
+          }
+          if (background) {
+            background.setAttribute("style", `background-image: url('${window.thumbnail_url}'); background-position: center;`);
+          }
+        }
+
         player.removeAttribute("video-mode_");
 
         const songimg = player.querySelector("div#song-image");

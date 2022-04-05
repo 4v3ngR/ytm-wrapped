@@ -154,6 +154,16 @@
       .song-media-controls {
         height: 56.25vw !important;
       }
+      div#av-id {
+        display: none !important;
+      }
+      div.background-image {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        opacity: 0.2;
+        filter: blur(4px);
+      }
     `;
     styleTag.innerHTML = css;
     document.head.appendChild(styleTag);
