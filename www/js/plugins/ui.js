@@ -162,7 +162,7 @@
         width: 100vw;
         height: 100vh;
         opacity: 0.2;
-        filter: blur(4px);
+        filter: blur(8px);
       }
     `;
     styleTag.innerHTML = css;
