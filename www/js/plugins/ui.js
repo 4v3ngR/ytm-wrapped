@@ -143,6 +143,12 @@
         visibility: hidden;
         display: none;
       }
+      tp-yt-paper-icon-button {
+        outline: none !important;
+      }
+      .song-media-controls {
+        height: 56.25vw !important;
+      }
     `;
     styleTag.innerHTML = css;
     document.head.appendChild(styleTag);

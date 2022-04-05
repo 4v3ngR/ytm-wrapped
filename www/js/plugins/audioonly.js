@@ -24,7 +24,7 @@
             cover = document.createElement("img");
             cover.setAttribute("id", "cover-image");
             cover.setAttribute("class", "style-scope yt-img-shadow");
-            cover.setAttribute("style", "height: 210px; object-fit: scale-down;");
+            cover.setAttribute("style", "height: 192px; object-fit: scale-down;");
             img.parentNode.replaceChild(cover, img);
           }
         }
