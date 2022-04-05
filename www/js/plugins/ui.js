@@ -16,7 +16,12 @@
       style.innerHTML = text.replace(/935px/g, '617px').replace(/936px/g, '618px');
     });
 
-    let styleTag = document.createElement("style");
+    let styleTag = document.querySelector("style#staticStyles");
+    if (styleTag) return;
+
+    styleTag = document.createElement("style");
+    styleTag.setAttribute("id", "staticStyles");
+
     let css = `
       .next-items-button,
       .previous-items-button {
@@ -176,12 +181,9 @@
   let clickedTab = null;
   const toggleSidePanel = (tab) => {
     const node = document.querySelector("ytmusic-app-layout");
-    console.log("here1");
     if (node.hasAttribute("expanded-controls")) {
-    console.log("here2");
       hideExpandedControls();
     } else if (tab === clickedTab) {
-    console.log("here3");
       showExpandedControls();
     }
     clickedTab = tab;
