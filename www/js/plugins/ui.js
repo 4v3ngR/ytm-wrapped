@@ -164,6 +164,9 @@
         opacity: 0.2;
         filter: blur(8px);
       }
+      div#player-bar-background {
+        background: black !important;
+      }
     `;
     styleTag.innerHTML = css;
     document.head.appendChild(styleTag);
