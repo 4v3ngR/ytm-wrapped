@@ -164,6 +164,7 @@
         opacity: 0.2;
         filter: blur(8px);
       }
+			ytmusic-player-bar,
       div#player-bar-background {
         background: black !important;
       }
