@@ -54,6 +54,12 @@
         padding: 4px !important;
       }
       @media (max-width: 617px) {
+        div#main-panel {
+          padding: 0px 84px !important;
+        }
+        div.content {
+          padding-top: 24px !important;
+        }
         ytmusic-app-layout[expanded-controls] div#extraControls {
           padding-top: 0px;
           position: absolute;
