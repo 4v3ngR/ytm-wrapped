@@ -35,6 +35,7 @@
       }
       div#extraControls {
         position: relative;
+        padding-top: 16px;
         left: 0px;
         right: 0px;
         height: 32px;
@@ -54,6 +55,7 @@
       }
       @media (max-width: 617px) {
         ytmusic-app-layout[expanded-controls] div#extraControls {
+          padding-top: 0px;
           position: absolute;
           top: 56.25vw;
           bottom: 40px;
@@ -63,30 +65,30 @@
           position: absolute;
           height: 32px;
           left: 0px;
-          bottom: 0px;
+          bottom: 10px;
           width: calc(100% - 32px) !important;
         }
         ytmusic-app-layout[expanded-controls] tp-yt-paper-icon-button#expand-volume {
           position: absolute;
           right: 10px;
-          bottom: 0px;
+          bottom: 10px;
         }
         ytmusic-app-layout[expanded-controls] tp-yt-paper-icon-button#expand-shuffle {
           position: absolute;
-          top: 300px;
+          top: 219px;
           right: 48px;
         }
         ytmusic-app-layout[expanded-controls] tp-yt-paper-icon-button#expand-repeat {
           position: absolute;
-          top: 300px;
+          top: 219px;
           left: 48px;
         }
         ytmusic-app-layout[expanded-controls] ytmusic-like-button-renderer#like-button-renderer {
           position: absolute;
-          left: 64px;
+          left: 16px;
           width: auto;
-          right: 64px;
-          bottom: 50%;
+          right: 16px;
+          top: 92px;
           display: flex !important;
           flex-direction: row;
           justify-content: space-between;
@@ -97,10 +99,10 @@
         }
         ytmusic-app-layout[player-page-open_][expanded-controls] div.left-controls-buttons {
           position: fixed;
-          top: calc(-100vh + 56.25vw + 128px);
+          top: calc(-100vh + 56.25vw + 330px);
           left: 80px;
           right: 80px;
-          bottom: 132px;
+          height: 64px;
           display: flex;
           flex-direction: row;
           justify-content: space-evenly;
@@ -111,17 +113,17 @@
         }
         ytmusic-app-layout[player-page-open_][expanded-controls] tp-yt-paper-slider#progress-bar {
           position: fixed;
-          top: calc(-100vh + 56.25vw + 408px);
+          top: calc(-100vh + 56.25vw + 460px);
           width: auto !important;
           left: 48px;
           right: 48px;
         }
         ytmusic-app-layout[player-page-open_][expanded-controls] div.content-info-wrapper.style-scope.ytmusic-player-bar {
           position: fixed;
-          top: calc(-100vh + 56.25vw + 200px);
+          top: calc(-100vh + 56.25vw + 215px);
           align-items: center;
           left: 48px;
-          right: 48px;
+          right: 36px;
         }
         ytmusic-app-layout[player-page-open_][expanded-controls] div.middle-controls-buttons {
           position: fixed;
@@ -164,7 +166,7 @@
         opacity: 0.2;
         filter: blur(8px);
       }
-			ytmusic-player-bar,
+      ytmusic-player-bar,
       div#player-bar-background {
         background: black !important;
       }
