@@ -54,6 +54,16 @@
         padding: 4px !important;
       }
       @media (max-width: 617px) {
+        div#song-media-controls,
+        div#song-image {
+          background: transparent !important;
+          position: fixed !important;
+          left: 0px !important;
+          top: 16px !important;
+          width: 100% !important;
+          height: 56.25vw !important;
+          padding: 0px !important;
+        }
         div#main-panel {
           padding: 0px 84px !important;
         }
@@ -91,9 +101,9 @@
         }
         ytmusic-app-layout[expanded-controls] ytmusic-like-button-renderer#like-button-renderer {
           position: absolute;
-          left: 16px;
+          left: 40px;
           width: auto;
-          right: 16px;
+          right: 40px;
           top: 92px;
           display: flex !important;
           flex-direction: row;
@@ -128,8 +138,8 @@
           position: fixed;
           top: calc(-100vh + 56.25vw + 215px);
           align-items: center;
-          left: 48px;
-          right: 36px;
+          left: 78px;
+          right: 66px;
         }
         ytmusic-app-layout[player-page-open_][expanded-controls] div.middle-controls-buttons {
           position: fixed;
@@ -139,7 +149,8 @@
       @media (min-width: 618px) {
         div#extraControls {
           position: fixed !important;
-          top: 0px;
+          top: -8px;
+          padding: 0px;
           height: 32px !important;
         }
         .dislike, .like {

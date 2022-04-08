@@ -47,11 +47,6 @@
         }
 
         player.removeAttribute("video-mode_");
-
-        const songimg = player.querySelector("div#song-image");
-        if (songimg) songimg.setAttribute("style", "background: transparent; position: fixed; left: 0px; top: 16px; width: 100%; height: 56.25vw; padding: 0px;");
-        const songmediacontrols = player.querySelector("div#song-media-controls");
-        if (songmediacontrols) songmediacontrols.setAttribute("style", "position: fixed; left: 0px; top: 16px; width: 100%; height: 56.25vw; padding: 0px;");
       }
     }
   });
