@@ -147,6 +147,10 @@
         }
       }
       @media (min-width: 618px) {
+        div#song-image {
+          height: 52vh;
+          padding: 0px !important;
+        }
         div#extraControls {
           position: fixed !important;
           top: -8px;
@@ -169,9 +173,6 @@
       }
       tp-yt-paper-icon-button {
         outline: none !important;
-      }
-      .song-media-controls {
-        height: 56.25vw !important;
       }
       div#av-id {
         display: none !important;
