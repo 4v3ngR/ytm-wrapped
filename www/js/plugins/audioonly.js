@@ -4,17 +4,18 @@
   console.log("loading audioonly");
 
   function getBestThumbnail(thumbnails) {
-    let res = { width: 0 };
+    let res = { sizes: "1" };
     for (let i = 0; i < thumbnails.length; i++) {
-      if (thumbnails[i].width > res.width) {
+      if (parseInt(thumbnails[i].sizes, 10) > parseInt(res.sizes, 10)) {
         res = thumbnails[i];
       }
     }
     return res;
   }
 
-  window.addEventListener("mediahaschanged", () => {
-    if (window.thumbnail_url) {
+  window.addEventListener("mediahaschanged", (e) => {
+    const thumbnail = getBestThumbnail(navigator.mediaSession.metadata.artwork);
+    if (thumbnail) {
       const player = document.querySelector("ytmusic-player");
       if (player) {
         let cover = player.querySelector("img#cover-image");
@@ -29,7 +30,7 @@
           }
         }
 
-        if (cover) cover.setAttribute("src", window.thumbnail_url);
+        if (cover) cover.setAttribute("src", thumbnail.src);
 
         const content = document.querySelector('div.content');
         if (content) {
@@ -42,7 +43,7 @@
             content.parentNode.insertBefore(background, content);
           }
           if (background) {
-            background.setAttribute("style", `background-image: url('${window.thumbnail_url}'); background-position: center;`);
+            background.setAttribute("style", `background-image: url('${thumbnail.src}'); background-position: center;`);
           }
         }
 
@@ -55,7 +56,6 @@
     if (url.includes('youtubei/v1/player') && state === 'response') try {
       var obj = JSON.parse(data);
       if (obj.videoDetails) {
-        window.thumbnail_url = getBestThumbnail(obj.videoDetails.thumbnail.thumbnails).url;
         obj.videoDetails.musicVideoType = "MUSIC_VIDEO_TYPE_ATV";
         data = JSON.stringify(obj);
       }

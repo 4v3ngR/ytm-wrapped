@@ -1,10 +1,8 @@
 (function() {
+  let thumbnail = null;
   let elapsed = 0;
   let duration = 0;
-  let dodgyTimeUpdateInterval = 0;
-  let title = "";
 
-  console.log("video plugin loaded");
   var video = null;
   var player = document.querySelector('ytmusic-player');
   if (player) {
@@ -22,59 +20,62 @@
       if (!video.eventsAdded) {
         video.addEventListener("play", handlePlay);
         video.addEventListener("pause", handlePause);
+        video.addEventListener("timeupdate", handleTimeUpdate);
         video.eventsAdded = true;
       }
     }
   }
 
+  function getBestThumbnail(thumbnails) {
+    let res = { sizes: "1" };
+    for (let i = 0; i < thumbnails.length; i++) {
+      if (parseInt(thumbnails[i].sizes, 10) > parseInt(res.sizes, 10)) {
+        res = thumbnails[i];
+      }
+    }
+    return res;
+  }
+
+  window.addEventListener("mediahaschanged", (e) => {
+    thumbnail = getBestThumbnail(navigator.mediaSession.metadata.artwork).src;
+    dispatch("loadeddata");
+  });
+
+  function handleTimeUpdate(e) {
+    dispatch("timeupdate");
+  }
+
   function handlePlay(e) {
     dispatch("play");
-    if (!dodgyTimeUpdateInterval) {
-      dodgyTimeUpdateInterval = setInterval(() => {
-        let t = document.querySelector('yt-formatted-string.title.style-scope.ytmusic-player-bar');
-        if (t) t = t.innerText;
-
-        slider = document.querySelector('tp-yt-paper-slider#progress-bar');
-        if (slider) {
-          const d = parseInt(slider.getAttribute("aria-valuemax"), 10);
-          elapsed = parseInt(slider.getAttribute("aria-valuenow"), 10);
-          if (d === duration && t === title) {
-            dispatch("timeupdate");
-          } else {
-            duration = d;
-            title = t;
-            dispatch("loadeddata");
-            // this will help with the audio only plugin
-            window.dispatchEvent(new Event("mediahaschanged"));
-          }
-        }
-      }, 500);
-    }
   }
 
   function handlePause(e) {
     dispatch("pause");
-    if (dodgyTimeUpdateInterval) {
-      clearInterval(dodgyTimeUpdateInterval);
-      dodgyTimeUpdateInterval = 0;
-    }
   }
 
   function dispatch(message) {
-    let artist = document.querySelector('span.byline-wrapper.style-scope.ytmusic-player-bar');
-    if (artist) artist = artist.innerText;
+    slider = document.querySelector('tp-yt-paper-slider#progress-bar');
+    if (slider) {
+      duration = parseInt(slider.getAttribute("aria-valuemax"), 10);
+      elapsed = parseInt(slider.getAttribute("aria-valuenow"), 10);
+    }
 
-    webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(
-      {
-        message,
-        image: window.thumbnail_url,
-        title,
-        artist,
-        playing: !video.paused,
-        elapsed,
-        duration
-      }
-    ));
+    const { state, meta } = navigator.mediaSession;
+    if (meta) {
+      const { album, artist, title } = meta;
+      webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(
+        {
+          message,
+          image: thumbnail,
+          album,
+          artist,
+          title,
+          playing: state === "playing",
+          elapsed,
+          duration
+        }
+      ));
+    }
   }
 
   // add global functions to allow the cordova app to control the video

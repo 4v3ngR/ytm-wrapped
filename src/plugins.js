@@ -1,21 +1,55 @@
 (function() {
   const plugins = {
-    "fetch.js": null,
-    "xmlhttprequest.js": null,
-    "tracking.js": null,
-    "background.js": null,
-    "adblock.js": null,
-    "audioonly.js": null,
-    "ui.js": null,
-    "controls.js": null,
-    "config.js": null,
-    "swipe.js": null
+    "fetch.js": {
+      "src": null,
+      "stage": "loadstart"
+    },
+    "xmlhttprequest.js": {
+      "src": null,
+      "stage": "loadstart"
+    },
+    "mediasession.js": {
+      "src": null,
+      "stage": "loadstart"
+    },
+    "tracking.js": {
+      "src": null,
+      "stage": "loadstop"
+    },
+    "background.js": {
+      "src": null,
+      "stage": "loadstop"
+    },
+    "adblock.js": {
+      "src": null,
+      "stage": "loadstop"
+    },
+    "audioonly.js": {
+      "src": null,
+      "stage": "loadstop"
+    },
+    "ui.js": {
+      "src": null,
+      "stage": "loadstop"
+    },
+    "controls.js": {
+      "src": null,
+      "stage": "loadstop"
+    },
+    "config.js": {
+      "src": null,
+      "stage": "loadstop"
+    },
+    "swipe.js": {
+      "src": null,
+      "stage": "loadstop"
+    }
   };
 
   const loadPlugin = async (plugin) => {
     const x = await fetch(`js/plugins/${plugin}`);
     const script = await x.text();
-    plugins[plugin] = script;
+    plugins[plugin].src = script;
   };
 
   const loadPlugins = async () => {
@@ -25,15 +59,15 @@
     }
   };
 
-  const injectPlugin = (ref, plugin) => {
+  const injectPlugin = (ref, plugin, stage) => {
     const script = plugins[plugin];
-    if (script) {
-      ref.executeScript({code: script}, () => null);
+    if (script && script.stage === stage) {
+      ref.executeScript({code: script.src}, () => null);
     }
   };
 
-  const injectPlugins = (ref) => {
-    Object.keys(plugins).forEach((plugin) => injectPlugin(ref, plugin));
+  const injectPlugins = (ref, stage) => {
+    Object.keys(plugins).forEach((plugin) => injectPlugin(ref, plugin, stage));
   };
 
   exports = module.exports = { loadPlugins, injectPlugins };

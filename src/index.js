@@ -25,12 +25,20 @@ const setStatus = (text) => {
 const loadstopHandler = () => {
   ref.insertCSS({code:"body{background-color:black;}"});
   try {
-    injectPlugins(ref);
+    injectPlugins(ref, "loadstop");
   } catch (ex) {
     console.error("got ex", ex.message);
   }
   ref.show();
   controls.init(ref);
+}
+
+const loadstartHandler = () => {
+  try {
+    injectPlugins(ref, "loadstart");
+  } catch (ex) {
+    console.error("got ex", ex.message);
+  }
 }
 
 const exitHandler = () => {
@@ -40,12 +48,13 @@ const exitHandler = () => {
 
 const loadYTM = async () => {
   if (!ref) {
-    window.blah = ref = cordova.InAppBrowser.open(
-      'https://music.youtube.com',
+    ref = cordova.InAppBrowser.open(
+      'https://music.youtube.com/?source=pwa',
       '_blank',
       'location=no,hidden=true,hardwareback=yes'
     );
 
+    ref.addEventListener('loadstart', loadstartHandler);
     ref.addEventListener('loadstop', loadstopHandler);
     ref.addEventListener('exit', exitHandler);
   }

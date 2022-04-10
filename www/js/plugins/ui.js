@@ -54,8 +54,8 @@
         padding: 4px !important;
       }
       @media (max-width: 617px) {
-        div#song-media-controls,
-        div#song-image {
+        ytmusic-player:not([player-ui-state_=MINIPLAYER]) div#song-media-controls,
+        ytmusic-player:not([player-ui-state_=MINIPLAYER]) div#song-image {
           background: transparent !important;
           position: fixed !important;
           left: 0px !important;
