@@ -57,6 +57,11 @@
         ytmusic-player {
           animation-duration: 0s !important;
         }
+        tp-yt-paper-icon-button.fullscreen-button {
+          visibility: hidden !important;
+          display: none !important;
+          touch-action: none !important;
+        }
         ytmusic-player:not([player-ui-state_=MINIPLAYER]) div#song-media-controls,
         ytmusic-player:not([player-ui-state_=MINIPLAYER]) div#song-image {
           background: transparent !important;

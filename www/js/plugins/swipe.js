@@ -5,21 +5,24 @@
   let touchendX = 0;
   let touchendY = 0;
 
+	const threshold = 8;
+
   if (window.swipeloaded === true) return;
   window.swipeloaded = true;
 
   const handleGesture = (touchstartX, touchstartY, touchendX, touchendY) => {
     const delx = touchendX - touchstartX;
     const dely = touchendY - touchstartY;
+
     if(Math.abs(delx) > Math.abs(dely)){
-      if(delx > 0) return "right"
-      else return "left"
+      if (delx > threshold) return "right";
+      else if (delx < threshold) return "left";
     }
     else if(Math.abs(delx) < Math.abs(dely)){
-      if(dely > 0) return "down"
-      else return "up"
+      if (dely > threshold) return "down";
+      else if (dely < threshold) return "up";
     }
-    else return "tap"
+    else return "tap";
   }
 
   let swiping = false;
