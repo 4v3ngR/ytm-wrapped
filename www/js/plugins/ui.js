@@ -54,6 +54,9 @@
         padding: 4px !important;
       }
       @media (max-width: 617px) {
+        ytmusic-player {
+          animation-duration: 0s !important;
+        }
         ytmusic-player:not([player-ui-state_=MINIPLAYER]) div#song-media-controls,
         ytmusic-player:not([player-ui-state_=MINIPLAYER]) div#song-image {
           background: transparent !important;
