@@ -10,7 +10,7 @@ android {
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
     implementation project(':capacitor-app')
-    implementation project(':capacitor-music-controls-plugin')
+    implementation project(':capacitor-music-controls-plugin-new')
 
 }
 

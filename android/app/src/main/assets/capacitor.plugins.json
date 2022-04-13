@@ -4,7 +4,7 @@
 		"classpath": "com.capacitorjs.plugins.app.AppPlugin"
 	},
 	{
-		"pkg": "capacitor-music-controls-plugin",
+		"pkg": "capacitor-music-controls-plugin-new",
 		"classpath": "com.ingageco.capacitormusiccontrols.CapacitorMusicControls"
 	}
 ]
