@@ -1,6 +1,8 @@
 # ytm-wrapped
 A simple capacitor app to load yt music and to inject some scripts
 
+![Screenshot_20220414_170821](https://user-images.githubusercontent.com/101933870/163352971-58d2b582-797f-4882-9c7a-1b1f36ef96f4.jpeg)
+
 ## dependencies
 capacitor
 android cli development tools
