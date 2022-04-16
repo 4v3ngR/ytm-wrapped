@@ -34,6 +34,9 @@
     styleTag.setAttribute("id", "staticStyles");
 
     let css = `
+      * {
+        outline: none !important;
+      }
       .next-items-button,
       .previous-items-button {
         visibility: hidden !important;
@@ -189,9 +192,6 @@
       tp-yt-paper-icon-button.expand-button {
         visibility: hidden;
         display: none;
-      }
-      tp-yt-paper-icon-button {
-        outline: none !important;
       }
       div#av-id {
         display: none !important;
